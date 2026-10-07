@@ -1,0 +1,54 @@
+{
+  "_readme": [
+    "Add your Instagram session cookies here.",
+    "Each entry = one Instagram account. Rotate cookies to handle 200-1000 downloads/day.",
+    "",
+    "How to get your cookies:",
+    "  1. Open Chrome/Firefox and log into Instagram",
+    "  2. Press F12 → Application tab → Cookies → https://www.instagram.com",
+    "  3. Copy: sessionid, ds_user_id, csrftoken, mid, ig_did, datr",
+    "  4. Format: name=value; name2=value2; ...",
+    "",
+    "Tip: Use 5-10 accounts for 200-1000 downloads/day reliability.",
+    "Blocked cookies auto-heal after 30 minutes.",
+    "The INSTAGRAM_COOKIES env variable is always used as account #1."
+  ],
+  "cookies": [
+    {
+      "id": "__user__",
+      "description": "User-provided session cookie",
+      "cookie_string": "sessionid=46257183831%3A7frPteGQmmH52n%3A10%3AAYiavH2sMFWtv98utPc5To7isOPwwgsSOlP7x-j588E",
+      "active": true
+    },
+    {
+      "id": "account_1",
+      "description": "Instagram account 1 (replace with your cookies)",
+      "cookie_string": "sessionid=YOUR_SESSION_ID_HERE; ds_user_id=YOUR_USER_ID; csrftoken=YOUR_CSRF_TOKEN; mid=YOUR_MID_VALUE; ig_did=YOUR_IG_DID; datr=YOUR_DATR",
+      "active": false
+    },
+    {
+      "id": "account_2",
+      "description": "Instagram account 2",
+      "cookie_string": "sessionid=YOUR_SESSION_ID_HERE; ds_user_id=YOUR_USER_ID; csrftoken=YOUR_CSRF_TOKEN; mid=YOUR_MID_VALUE; ig_did=YOUR_IG_DID; datr=YOUR_DATR",
+      "active": false
+    },
+    {
+      "id": "account_3",
+      "description": "Instagram account 3",
+      "cookie_string": "sessionid=YOUR_SESSION_ID_HERE; ds_user_id=YOUR_USER_ID; csrftoken=YOUR_CSRF_TOKEN; mid=YOUR_MID_VALUE; ig_did=YOUR_IG_DID; datr=YOUR_DATR",
+      "active": false
+    },
+    {
+      "id": "account_4",
+      "description": "Instagram account 4",
+      "cookie_string": "sessionid=YOUR_SESSION_ID_HERE; ds_user_id=YOUR_USER_ID; csrftoken=YOUR_CSRF_TOKEN; mid=YOUR_MID_VALUE; ig_did=YOUR_IG_DID; datr=YOUR_DATR",
+      "active": false
+    },
+    {
+      "id": "account_5",
+      "description": "Instagram account 5",
+      "cookie_string": "sessionid=YOUR_SESSION_ID_HERE; ds_user_id=YOUR_USER_ID; csrftoken=YOUR_CSRF_TOKEN; mid=YOUR_MID_VALUE; ig_did=YOUR_IG_DID; datr=YOUR_DATR",
+      "active": false
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: video
+    description: Video download operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /video/info:
+    post:
+      operationId: getVideoInfo
+      tags: [video]
+      summary: Get video info
+      description: Fetch metadata and available formats for a video URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VideoInfoRequest"
+      responses:
+        "200":
+          description: Video information retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoInfoResponse"
+        "400":
+          description: Invalid URL or unsupported platform
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /video/download:
+    post:
+      operationId: downloadVideo
+      tags: [video]
+      summary: Download video
+      description: Initiate a video download and return the file
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DownloadRequest"
+      responses:
+        "200":
+          description: Download link or stream
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DownloadResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    VideoInfoRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of the video to fetch info for
+      required:
+        - url
+    VideoFormat:
+      type: object
+      properties:
+        formatId:
+          type: string
+        ext:
+          type: string
+        quality:
+          type: string
+        resolution:
+          type: string
+        filesize:
+          type: number
+          nullable: true
+        hasVideo:
+          type: boolean
+        hasAudio:
+          type: boolean
+      required:
+        - formatId
+        - ext
+        - quality
+        - hasVideo
+        - hasAudio
+    VideoInfoResponse:
+      type: object
+      properties:
+        title:
+          type: string
+        thumbnail:
+          type: string
+          nullable: true
+        duration:
+          type: number
+          nullable: true
+        uploader:
+          type: string
+          nullable: true
+        platform:
+          type: string
+        formats:
+          type: array
+          items:
+            $ref: "#/components/schemas/VideoFormat"
+      required:
+        - title
+        - platform
+        - formats
+    DownloadRequest:
+      type: object
+      properties:
+        url:
+          type: string
+        formatId:
+          type: string
+          description: Format ID to download (from VideoInfoResponse.formats)
+      required:
+        - url
+        - formatId
+    DownloadResponse:
+      type: object
+      properties:
+        downloadUrl:
+          type: string
+          description: URL to download the file
+        filename:
+          type: string
+        ext:
+          type: string
+      required:
+        - downloadUrl
+        - filename
+        - ext
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+          nullable: true
+      required:
+        - error

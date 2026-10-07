@@ -1,0 +1,32 @@
+{
+  "name": "api-server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "start": "tsx src/index.ts",
+    "build": "tsx build.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^5",
+    "cors": "^2",
+    "cookie-parser": "^1.4.7",
+    "https-proxy-agent": "^7.0.6",
+    "socks-proxy-agent": "^8.0.5"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "tsx": "^4.19.0",
+    "@types/node": "^22",
+    "@types/express": "^5",
+    "@types/cors": "^2",
+    "@types/cookie-parser": "^1.4.10"
+  },
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

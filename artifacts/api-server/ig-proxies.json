@@ -1,0 +1,19 @@
+{
+  "_readme": [
+    "Add residential or datacenter proxies here.",
+    "Supported formats: http://, https://, socks5://",
+    "With auth:    http://username:password@host:port",
+    "Without auth: http://host:port",
+    "",
+    "Proxies rotate round-robin across all Instagram requests.",
+    "Leave the list empty [] to disable proxy support.",
+    "",
+    "Recommended: residential proxies from US/EU for best Instagram compatibility.",
+    "Good providers: Brightdata, Oxylabs, Smartproxy, IPRoyal."
+  ],
+  "proxies": [
+    "http://USERNAME:PASSWORD@PROXY_HOST_1:PORT",
+    "http://USERNAME:PASSWORD@PROXY_HOST_2:PORT",
+    "socks5://USERNAME:PASSWORD@PROXY_HOST_3:PORT"
+  ]
+}

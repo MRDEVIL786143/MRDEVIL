@@ -1,0 +1,14 @@
+packages:
+  "framer-motion": "For smooth entry animations, layout transitions, and interactive micro-animations"
+  "lucide-react": "For beautiful, consistent iconography across the platform"
+  "clsx": "For conditional class name joining"
+  "tailwind-merge": "For merging tailwind classes without style conflicts"
+
+images:
+  - path: "artifacts/video-downloader/public/images/hero-bg.png"
+    description: "Dark, moody, abstract gradient mesh background with deep slate, electric indigo, and subtle neon purple light leaks. Highly professional tech aesthetic."
+    aspect_ratio: "16:9"
+
+notes:
+  - Assumes @workspace/api-client-react exports the generated hooks like useGetVideoInfo and useDownloadVideo
+  - Uses framer-motion for complex UI state transitions (like expanding the video details card)
