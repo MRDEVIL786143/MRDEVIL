@@ -10,7 +10,7 @@ const app: Express = express();
 // trust it so per-IP rate limiting sees the real client IP.
 app.set("trust proxy", true);
 
-// ── Security headers ──────────────────────────────────────────────────────────
+// ── Security headers ────────────────────────────────────────────────────────
 app.use((_req: Request, res: Response, next: NextFunction) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
@@ -19,7 +19,7 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// ── CORS ──────────────────────────────────────────────────────────────────────
+// ── CORS ────────────────────────────────────────────────────────────────────
 app.use(cors({
   origin: true,
   methods: ["GET", "POST", "OPTIONS"],
@@ -27,11 +27,11 @@ app.use(cors({
   credentials: false,
 }));
 
-// ── Body parsing ──────────────────────────────────────────────────────────────
+// ── Body parsing ────────────────────────────────────────────────────────────
 app.use(express.json({ limit: "64kb" }));
 app.use(express.urlencoded({ extended: true, limit: "64kb" }));
 
-// ── Per-IP rate limiter (sliding window, production-grade) ────────────────────
+// ── Per-IP rate limiter (sliding window, production-grade) ──────────────────
 // Separate buckets for /info (heavier TikTok calls) and /download (file I/O)
 interface RateBucket { count: number; resetAt: number; }
 const rateLimitMap = new Map<string, { info: RateBucket; download: RateBucket }>();
@@ -103,7 +103,7 @@ setInterval(() => {
   }
 }, 5 * 60 * 1000);
 
-// ── Health check ──────────────────────────────────────────────────────────────
+// ── Health check ────────────────────────────────────────────────────────────
 app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "ok", uptime: Math.floor(process.uptime()) });
 });
@@ -111,10 +111,10 @@ app.get("/healthz", (_req: Request, res: Response) => {
   res.json({ status: "ok", uptime: Math.floor(process.uptime()) });
 });
 
-// ── Routes ────────────────────────────────────────────────────────────────────
+// ── Routes ──────────────────────────────────────────────────────────────────
 app.use("/api", router);
 
-// ── Static frontend (single-service deploys, e.g. Railway Dockerfile) ─────────
+// ── Static frontend (single-service deploys, e.g. Railway Dockerfile) ──────
 // When WEB_DIST exists, serve the built React app with an SPA fallback so the
 // whole product runs from ONE Railway service.
 const WEB_DIST = process.env.WEB_DIST || path.resolve(process.cwd(), "../../web-dist");
@@ -122,18 +122,17 @@ if (fs.existsSync(path.join(WEB_DIST, "index.html"))) {
   console.log(`[app] serving frontend from ${WEB_DIST}`);
   app.use(express.static(WEB_DIST, { index: "index.html", maxAge: "1d", setHeaders: (res, p) => { if (p.endsWith("index.html")) res.setHeader("Cache-Control", "no-cache"); } }));
   // SPA fallback — keep /api 404s as JSON
-  app.get("*", (req: Request, res: Response, next: NextFunction) => {
-    if (req.path.startsWith("/api")) return next();
+  app.use((req: Request, res: Response) => {
     res.sendFile(path.join(WEB_DIST, "index.html"));
   });
 }
 
-// ── 404 handler ───────────────────────────────────────────────────────────────
+// ── 404 handler ─────────────────────────────────────────────────────────────
 app.use((_req: Request, res: Response) => {
   res.status(404).json({ error: "Not found" });
 });
 
-// ── Global error handler ──────────────────────────────────────────────────────
+// ── Global error handler ────────────────────────────────────────────────────
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error("[app] unhandled error:", err.message);
   res.status(500).json({ error: "Internal server error" });
